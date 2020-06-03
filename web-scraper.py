@@ -15,7 +15,7 @@ def get_citations_needed_count(URL):
     # find all the citation
     citations = main_elements.find_all('sup', class_='noprint Inline-Template Template-Fact')
     # Obtainn the number of citations
-    num_citations = len(citations)
+    num_citations = len(citations)-1
 
     return f'The number of citations in this URL are: {str(num_citations)}.'
 
@@ -31,9 +31,8 @@ def get_citations_needed_report(URL):
 
     ind = 0
     for paragraph in all_paragraphs:
-        if 'citation needed' in str(paragraph):
-            # return_passages += "[" + str(ind) + "]" +  "***************************"
-            return_passages += str(paragraph) + "\n\n"
+        if 'citation needed' in str(paragraph.text):
+            return_passages += str(paragraph.text) + "\n\n"
             ind = ind + 1
      
      
@@ -43,5 +42,5 @@ def get_citations_needed_report(URL):
 
 if __name__ == "__main__":
     URL = 'https://en.wikipedia.org/wiki/History_of_Mexico' 
-    # print(get_citations_needed_count(URL))
+    print(get_citations_needed_count(URL))
     print(get_citations_needed_report(URL))
