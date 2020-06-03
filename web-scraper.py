@@ -21,37 +21,23 @@ def get_citations_needed_count(URL):
 
 
 def get_citations_needed_report(URL):
-    passages = ''
+    return_passages = ''
     response = requests.get(URL)
 
     content = response.content
     soup = BeautifulSoup(content,'html.parser')    
     main_elements = soup.find(id='mw-content-text')
     all_paragraphs = main_elements.find_all('p')
-    
-    
-    # print(all_paragraphs[0:1])
-    paragraph = str(all_paragraphs[0])
-    print('***********')
-    print (paragraph)
-    print('***********')
-    # paragraph = all_paragraphs[1]
-    # print('***********')
-    # print (paragraph)
-    # print('***********')
-#     txt = "The rain in Spain stays mainly in the plain"
-# x = "ain" in txt
-# print(x)
-    if 'iris' in paragraph:
-        print('yeap')
-    else:
-        print('nop')
 
-    # print(len(all_paragraphs))
-    # for parag
-
-
-    return passages
+    ind = 0
+    for paragraph in all_paragraphs:
+        if 'citation needed' in str(paragraph):
+            # return_passages += "[" + str(ind) + "]" +  "***************************"
+            return_passages += str(paragraph) + "\n\n"
+            ind = ind + 1
+     
+     
+    return return_passages
 
 
 
